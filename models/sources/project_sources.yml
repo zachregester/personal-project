@@ -49,3 +49,18 @@ sources:
           - name: training_end_date
           - name: training_name
           - name: training_completion
+
+      - name: source_surveys
+        identifier: SOURCE_SURVEYS
+        description: Survey Data.
+        loaded_at_field: training_end_date
+        columns:
+          - name: employee_id
+          - name: survey_name
+          - name: survey_section
+          - name: survey_score
+          - name: exec_leader
+          - name: l1_from_top_leader
+          - name: l2_from_top_leader
+          - name: l3_from_top_leader
+          - name: direct_manager
