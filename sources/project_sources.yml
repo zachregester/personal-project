@@ -1,0 +1,51 @@
+version: 2
+
+sources:
+  - name: source
+    database: "PRODUCTION_DATABASE"
+    schema: SOURCE
+    quoting:
+      database: false
+      schema: false
+      identifier: false
+
+    tables:
+      - name: source_headcount
+        identifier: SOURCE_HEADCOUNT
+        loaded_at_field: period_date
+        columns:
+          - name: employee_id
+          - name: period_date
+          - name: job_name
+          - name: is_contractor
+
+      - name: source_hires
+        identifier: SOURCE_HIRES
+        description: Hire events.
+        loaded_at_field: period_date
+        columns:
+          - name: employee_id
+          - name: hire_date
+          - name: period_date
+
+      - name: source_terminations
+        identifier: SOURCE_TERMINATIONS
+        description: Termination events.
+        loaded_at_field: period_date
+        columns:
+          - name: employee_id
+          - name: termination_date
+          - name: termination_type
+          - name: termination_reason
+          - name: period_date
+
+      - name: source_trainings
+        identifier: SOURCE_TRAININGS
+        description: Training participation.
+        loaded_at_field: training_end_date
+        columns:
+          - name: employee_id
+          - name: training_start_date
+          - name: training_end_date
+          - name: training_name
+          - name: training_completion
