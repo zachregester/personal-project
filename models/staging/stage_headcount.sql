@@ -27,5 +27,7 @@ select employee_id
 from {{ source('source','source_headcount')}}
 
 where 1=1
+
+-- Only interested in data starting in 2024 in this example pipeline
 and period_date >= '2024-12-01'
 and period_date <= date_trunc('month', current_date)
