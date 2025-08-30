@@ -21,6 +21,5 @@ select employee_id
 from {{ source('source','source_hires')}}
 
 where 1=1
-and period_date >= '2024-12-01'
 and date_trunc('month', hire_date) =  period_date
 and period_date <= date_trunc('month', current_date)
