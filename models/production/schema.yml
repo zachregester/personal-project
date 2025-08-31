@@ -1,0 +1,11 @@
+version: 2
+
+models:
+  - name: tableau_leader_scorecard
+    columns:
+      - name: employee_id
+        tests:
+          - not_null
+      - name: period_start
+        tests:
+          - not_null
