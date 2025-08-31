@@ -1,5 +1,12 @@
 {{ config(materialized='table')}}
 
+-- Example Scenario Below
+
+-- Purpose: Provide a production-grade source for a Tableau dashboard covering headcount, hires, terminations, surveys, and training.
+-- Audience: People Analytics stakeholders.
+-- Inputs: source_headcount, source_hires, source_terminations, source_surveys, source_trainings.
+-- Outputs: clean, conformed fields, with consistent date keys.
+
 -- Import CTEs
 
 with hc as (
@@ -91,7 +98,7 @@ with hc as (
         from {{ ref("stage_terminations") }}
 
 )
--- left off here, adding null as fields as applicable to the below.
+
 ,   surveys as (
 
         select 'Surveys' as metric
@@ -152,7 +159,7 @@ with hc as (
 
 )
 
--- Union
+-- Union Metrics
 
 ,    stacked as (
 
@@ -175,6 +182,8 @@ with hc as (
        (select * from trainings)
 
 )
+
+-- Final CTE
 
 ,    final as (
 
