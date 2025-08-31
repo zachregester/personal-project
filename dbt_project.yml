@@ -38,6 +38,8 @@ models:
     # Applies to all files under models/example/
     sources:
       +schema: SOURCE
+    staging:
+      +schema: STAGING
     production:
       +schema: PRODUCTION
     aggregated_external_models:
