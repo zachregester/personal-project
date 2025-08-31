@@ -43,6 +43,7 @@ dbt_project.yml                            # conventions, folders, quoting, test
 
 **Notes**
 --------
+In a real production environment, I’d schedule a daily job to refesh data and add source freshness checks.
 
 This repo is for viewing only - it omits environment configuration and credentials.
 
