@@ -1,9 +1,17 @@
 {{ config(materialized='ephemeral')}}
 
 select employee_id
-    ,  to_varchar(period_date, 'YYYY-MM-DD') as period_date
-    ,  date_trunc('quarter', period_date) as beg_of_quarter
-    ,  hire_date
+
+    ,  case when year(period_date) < 100
+            then dateadd(year, 2000, period_date)
+            else period_date end as period_date_clean
+
+    ,  date_trunc('quarter', period_date_clean) as beg_of_quarter
+
+    ,  case when year(hire_date) < 100
+            then dateadd(year, 2000, hire_date)
+            else hire_date end as hire_date_clean
+
     ,  initcap(lower(metric)) as metric
     ,  initcap(lower(job_name)) as job_name_clean
     ,  job_name_code
@@ -21,5 +29,5 @@ select employee_id
 from {{ source('source','source_hires')}}
 
 where 1=1
-and date_trunc('month', hire_date) =  period_date
+and date_trunc('month', hire_date_clean) =  period_date
 and period_date <= date_trunc('month', current_date)

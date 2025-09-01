@@ -14,7 +14,7 @@ with hc as (
 
     select 'Headcount' as metric
         ,  employee_id
-        ,  period_date
+        ,  period_date_clean as period_date
         ,  beg_of_quarter
         ,  null as hire_date
         ,  null as termination_date
@@ -44,9 +44,9 @@ with hc as (
 
         select 'Hires' as metric
         ,  employee_id
-        ,  period_date
+        ,  period_date_clean as period_date
         ,  beg_of_quarter
-        ,  hire_date
+        ,  hire_date_clean as hire_date
         ,  null as termination_date
         ,  job_name_clean as job_name
         ,  job_name_code
@@ -138,10 +138,10 @@ with hc as (
         ,  null as beg_of_quarter
         ,  null as hire_date
         ,  null as termination_date
-        ,  null as job_name_clean
+        ,  null as job_name
         ,  null as job_name_code
         ,  null as job_description
-        ,  null as is_contractor_clean
+        ,  null as is_contractor
         ,  null as exec_leader
         ,  null as l1_from_top_leader
         ,  null as l2_from_top_leader
@@ -154,7 +154,7 @@ with hc as (
         ,  training_name
         ,  training_status
         ,  training_start_date
-        ,  training_end_data_clean as training_end_date
+        ,  training_end_date_clean as training_end_date
 
         from {{ ref("stage_trainings") }}
 
