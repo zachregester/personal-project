@@ -219,4 +219,7 @@ with hc as (
 select *
 from final
 
+where 1=1
+and period_date is null
+
 

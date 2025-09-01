@@ -3,9 +3,12 @@ version: 2
 models:
   - name: tableau_leader_scorecard
     columns:
+      
       - name: employee_id
         tests:
           - not_null
-      - name: period_start
+
+      - name: metric
         tests:
-          - not_null
+          - accepted_values:
+              values: ['Headcount','Hires','Terminations','Surveys','Trainings']
