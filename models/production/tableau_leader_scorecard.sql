@@ -2,7 +2,8 @@
 
 -- Example Scenario Below
 
--- Purpose: Provide a production-grade source for a Tableau dashboard covering headcount, hires, terminations, surveys, and training.
+-- Stakeholder Request: Provide a production-grade source for a Tableau dashboard covering headcount, hires, terminations, surveys, and training.
+-- Stakeholder: People Analytics team member.
 -- Audience: People Analytics stakeholders.
 -- Inputs: source_headcount, source_hires, source_terminations, source_surveys, source_trainings.
 -- Outputs: clean, conformed fields, with consistent date keys.
