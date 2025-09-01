@@ -6,9 +6,9 @@ select employee_id
 
     ,  (case when training_end_date is null then current_date() 
              else training_end_date
-             end) as training_end_data_clean
+             end) as training_end_date_clean
 
-    ,  (case when training_end_data_clean = current_date() then 'Active'
+    ,  (case when training_end_date_clean = current_date() then 'Active'
              else 'Inactive'
              end) as training_status
 

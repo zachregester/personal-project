@@ -1,8 +1,12 @@
 {{ config(materialized='ephemeral')}}
 
 select employee_id
-    ,  period_date
-    ,  date_trunc('quarter', period_date) as beg_of_quarter
+
+    ,  case when year(period_date) < 100
+            then dateadd(year, 2000, period_date)
+            else period_date end as period_date_clean
+
+    ,  date_trunc('quarter', period_date_clean) as beg_of_quarter
 
     ,  initcap(lower(metric)) as metric
 

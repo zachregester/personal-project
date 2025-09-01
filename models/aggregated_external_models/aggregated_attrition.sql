@@ -11,7 +11,7 @@
 
 with base as (
 
-    select concat('Q', quarter(beg_of_quarter), ' ', year(beg_of_quarter)) as quarter_start
+    select beg_of_quarter as quarter_start
         ,  period_date as period_start
         ,  sum(case when metric = 'Terminations' then 1 else 0 end) as overall_terminations
         ,  sum(case when metric = 'Terminations' and job_name = 'Data Engineer' then 1 else 0 end) as data_engineer_terminations
@@ -65,11 +65,14 @@ with base as (
 
                         /
                         
-                        nullif(((first_value(overall_beg_headcount) over (partition by quarter_start order by period_start))
+                        nullif(((
+                            (first_value(overall_beg_headcount) over (partition by quarter_start order by period_start))
 
                         +
 
-                        (last_value(overall_end_headcount) over (partition by quarter_start order by period_start)) / 2),0)
+                            (last_value(overall_end_headcount) over (partition by quarter_start order by period_start))
+                            
+                                ) / 2) ,0)
 
                         as overall_attrition_quarterly
 
@@ -87,11 +90,14 @@ with base as (
 
                         /
                         
-                        nullif(((first_value(data_engineer_beg_headcount) over (partition by quarter_start order by period_start))
+                        nullif(((
+                            (first_value(data_engineer_beg_headcount) over (partition by quarter_start order by period_start))
 
                         +
 
-                        (last_value(data_engineer_end_headcount) over (partition by quarter_start order by period_start)) / 2),0)
+                            (last_value(data_engineer_end_headcount) over (partition by quarter_start order by period_start))
+                                
+                                ) / 2),0)
 
                         as data_engineer_attrition_quarterly
 
@@ -109,6 +115,7 @@ with base as (
 
     left join quarterly_data_engineer de
     on o.period_start = de.period_start
+    and o.quarter_start = de.quarter_start
 
     where 1=1
     and year(o.period_start) >= 2025
