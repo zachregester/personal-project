@@ -153,8 +153,8 @@ with hc as (
         ,  null as section_answered
         ,  training_name
         ,  training_status
-        ,  training_start_date
-        ,  training_end_date_clean as training_end_date
+        ,  training_start_date_clean as training_start_date
+        ,  training_end_date_final as training_end_date
 
         from {{ ref("stage_trainings") }}
 
