@@ -2,12 +2,12 @@
 
 -- Example Scenario Below
 
--- Purpose: Provide monthly and quarterly attrition metrics at both the overall workforce level and for the Data Engineer population specifically.
--- Audience: Ops Analytics Team
+-- Stakeholder Request: Provide monthly and quarterly attrition metrics at both the overall workforce level and for the Data Engineer population specifically.
+-- Stakholder: Ops Analytics Team
 -- Requirement: Aggregated to protect employee-level data.
 -- Grain: One row per month (period_start), with derived quarterly metrics.
 -- Inputs: tableau_leader_scorecard (derived from source_headcount, source_hires, source_terminations, source_surveys, source_trainings).
--- Outputs: Clean attrition measures (overall vs. Data Engineer) with consistent date keys and quarterly rollups.
+-- Outputs: Clean attrition measures (overall & Data Engineer) with consistent date keys and quarterly rollups.
 
 with base as (
 
