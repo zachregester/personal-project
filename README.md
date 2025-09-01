@@ -11,7 +11,7 @@ Note: All data is fake and illustrative. Nothing comes from any employer or prop
 
 **Models**: full flow from sources → staging → production → aggregated_external_models  
 
-**Tests**: exampple custom SQL test for a dbt model
+**Tests**: example custom SQL test for a dbt model
 
 **Macros**: generate_schema_name.sql for schema config overrides
 
@@ -45,6 +45,6 @@ dbt_project.yml                            # conventions, folders, quoting, test
 --------
 In a real production environment, I would schedule a daily job (seed → run → test) to refesh data and add source freshness checks on regular cadence.
 
-This repo is for viewing only - it omits environment configuration and credentials.
+This repo is for viewing only, it omits environment configuration and credentials.
 
-Definitions are generic (industry - standard HR metrics like headcount, hires, attrition, etc).
+Definitions are generic (industry-standard HR metrics like headcount, hires, attrition, etc).
