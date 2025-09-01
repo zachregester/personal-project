@@ -4,25 +4,25 @@ Purpose: Demonstrate how I structure dbt projects using **fully synthetic data**
 
 Goal: Highlight process, design, and best practices - not to replicate real business complexity.
 
-Please note: All data is fake and illustrative. Nothing comes from any employer or proprietary system.
+Note: All data is fake and illustrative. Nothing comes from any employer or proprietary system.
 
 **Highlights**
 --------
 
-**Models**: staging → production → aggregated_external_models  
+**Models**: full flow from sources → staging → production → aggregated_external_models  
 
-**Tests**: custom SQL test for dbt model
+**Tests**: exampple custom SQL test for a dbt model
 
-**Macros**: generate_schema_name.sql (schema config override instructions)
+**Macros**: generate_schema_name.sql for schema config overrides
 
-**Python examples:** separate API notebooks (`x_python_example/`) to show comfort pulling from REST APIs and shaping data with pandas (separate from dbt project)
+**Python examples:** separate API notebooks (`x_python_example/`) to show pulling from REST APIs and shaping data with pandas (separate from dbt project)
 
-**Repo tour**
+**Repo Tour**
 ---------
 
 ```text
 models/
-  ├─ sources/                              # raw-like tables (synthetic)
+  ├─ sources/                              # information on raw data (synthetic)
   ├─ staging/                              # cleaned, conformed tables
   ├─ production/                           # business-ready models (analysis-ready / dashboard-ready)
   └─ aggregated_external_models/           # aggregated tables (safe to share with business stakeholders)
@@ -34,7 +34,7 @@ tests/
   └─ no_dups_tableau_leader_scorecard.sql  # example singular test
 
 x_python_example/
-  └─ pokemon_api.ipynb                     # standalone Python API scripts (unrelated to dbt, included to demonstrate REST API + pandas)
+  └─ pokemon_api.ipynb                     # REST API + Pandas examples (unrelated to dbt project, included to demonstrate ability)
   └─ restcountries.ipynb
   └─ rickandmorty.ipynb  
 
@@ -43,7 +43,7 @@ dbt_project.yml                            # conventions, folders, quoting, test
 
 **Notes**
 --------
-In a real production environment, I’d schedule a daily job to refesh data and add source freshness checks.
+In a real production environment, I would schedule a daily job (seed → run → test) to refesh data and add source freshness checks on regular cadence.
 
 This repo is for viewing only - it omits environment configuration and credentials.
 
