@@ -29,6 +29,8 @@ select employee_id
     ,  l2_from_top_leader
     ,  l3_from_top_leader
     ,  direct_manager
+    ,  upper(region) as region
+    ,  state
 
 from {{ source('source','source_headcount')}}
 
