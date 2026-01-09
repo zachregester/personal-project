@@ -16,7 +16,7 @@ select employee_id
              when job_name is null and job_name_code like 'MLE%' then 'ML Engineer'
              else initcap(lower(job_name)) end) as job_name_clean
 
-    ,  job_name_code
+    ,  job_name_code as job_code
     ,  concat(job_name_clean, ' - ', job_name_code) as job_description
 
        --correcting classification of contractor employee_ids
