@@ -18,7 +18,7 @@ with base as (
         ,  count(distinct case when metric = 'Headcount' then employee_id end) as overall_end_headcount
         ,  count(distinct case when metric = 'Headcount' and job_name = 'Data Engineer' then employee_id end) as data_engineer_end_headcount
 
-    from {{ ref('tableau_leader_scorecard') }} hc
+    from {{ ref('int_employee_monthly') }} hc
 
     where 1=1
     and metric not in ('Trainings', 'Surveys')
