@@ -67,7 +67,7 @@ try:
         table_name=TABLE,
         database=DATABASE,
         schema=SCHEMA,
-        overwrite=True,  # replace table contents
+        overwrite=True,
         quote_identifiers=False,
         auto_create_table=False,
     )
