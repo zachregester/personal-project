@@ -14,6 +14,9 @@ with base as (
                  then dateadd(year, 2000, termination_date)
                  else termination_date end) as termination_date_clean
 
+        ,  initcap(lower(termination_type)) as termination_type
+        ,  termination_reason
+
         ,  (case when metric ilike 'Term%' then 'Termination'
                  else initcap(lower(metric)) end)
                  as metric
@@ -24,9 +27,9 @@ with base as (
 
         ,  concat(job_name_clean, ' - ', job_name_code) as job_description
 
-        ,  (case when employee_id like '%101%' and length(employee_id) >= 5 then 'True'
-                 when employee_id in ('10256','10257', '10258') and period_date = '2025-08-01' then 'True'
-                 else initcap(upper(is_contractor)) end) as is_contractor_clean
+        ,  (case when employee_id like '999%' and length(employee_id) >= 5 then 'true'
+                 when employee_id in ('10256','10257', '10258') and period_date = '2025-08-01' then 'true'
+                 else upper(try_to_boolean(is_contractor)) end) as is_contractor_clean
 
         ,  exec_leader
         ,  l1_from_top_leader
