@@ -8,10 +8,12 @@ with hc as (
         ,  beg_of_quarter
         ,  null as hire_date
         ,  null as termination_date
+        ,  null as termination_type
+        ,  null as termination_reason
         ,  job_name_clean as job_name
         ,  job_code
         ,  job_description
-        ,  is_contractor_clean as is_contractor
+        ,  is_contractor
         ,  exec_leader
         ,  l1_from_top_leader
         ,  l2_from_top_leader
@@ -28,12 +30,14 @@ with hc as (
         ,  employee_id
         ,  period_date_clean as period_date
         ,  beg_of_quarter
-        ,  hire_date_clean as hire_date
+        ,  hire_date
         ,  null as termination_date
+        ,  null as termination_type
+        ,  null as termination_reason
         ,  job_name_clean as job_name
-        ,  job_code_clean as job_code
+        ,  job_code
         ,  job_description
-        ,  is_contractor_clean as is_contractor
+        ,  is_contractor
         ,  exec_leader
         ,  l1_from_top_leader
         ,  l2_from_top_leader
@@ -51,11 +55,13 @@ with hc as (
         ,  t.period_date_clean as period_date
         ,  t.beg_of_quarter
         ,  null as hire_date
-        ,  t.termination_date_clean as termination_date
+        ,  t.termination_date
+        ,  t.termination_type
+        ,  t.termination_reason
         ,  t.job_name_clean as job_name
         ,  t.job_code
         ,  t.job_description
-        ,  t.is_contractor_clean as is_contractor
+        ,  t.is_contractor
         ,  t.exec_leader
         ,  t.l1_from_top_leader
         ,  t.l2_from_top_leader
