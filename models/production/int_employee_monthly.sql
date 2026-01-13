@@ -66,7 +66,10 @@ with hc as (
         ,  t.l1_from_top_leader
         ,  t.l2_from_top_leader
         ,  t.l3_from_top_leader
-        ,  hc.region
+
+        ,  (case when hc.region is null then 'EAST'
+                 else hc.region end) as region
+
         ,  hc.state
 
         from {{ ref("stage_terminations") }} t
@@ -101,6 +104,8 @@ with hc as (
         ,  s.beg_of_quarter
         ,  s.hire_date
         ,  s.termination_date
+        ,  s.termination_type
+        ,  s.termination_reason
         ,  s.job_name
         ,  s.job_code
         ,  s.job_description
