@@ -12,17 +12,17 @@ select employee_id
 
     ,  (case when year(hire_date) < 100
              then dateadd(year, 2000, hire_date)
-             else hire_date end) as hire_date_clean
+             else hire_date end) as hire_date
 
     ,  initcap(lower(metric)) as metric
     ,  initcap(lower(job_name)) as job_name_clean
-    ,  upper(job_name_code) as job_code_clean
+    ,  upper(job_name_code) as job_code
     ,  concat(job_name_clean, ' - ', job_name_code) as job_description
 
        --correcting classification of contractor employee_ids
-    ,  (case when employee_id like '%101%' and length(employee_id) >= 5 then 'True'
-            when employee_id in ('10256','10257', '10258') and period_date = '2025-08-01' then 'true'
-            else initcap(upper(is_contractor)) end) as is_contractor_clean
+    ,  (case when employee_id like '%101%' and length(employee_id) >= 5 then TRUE
+            when employee_id in ('10256','10257', '10258') and period_date = '2025-08-01' then TRUE
+            else try_to_boolean(is_contractor) end) as is_contractor
 
     ,  exec_leader
     ,  l1_from_top_leader

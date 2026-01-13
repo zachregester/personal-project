@@ -20,9 +20,9 @@ select employee_id
     ,  concat(job_name_clean, ' - ', job_name_code) as job_description
 
        --correcting classification of contractor employee_ids
-    ,  (case when employee_id like '%101%' and length(employee_id) >= 5 then 'True'
-            when employee_id in ('10256','10257', '10258') and period_date = '2025-08-01' then 'true'
-            else initcap(upper(is_contractor)) end) as is_contractor_clean
+    ,  (case when employee_id like '%101%' and length(employee_id) >= 5 then TRUE
+            when employee_id in ('10256','10257', '10258') and period_date = '2025-08-01' then TRUE
+            else try_to_boolean(is_contractor) end) as is_contractor
 
     ,  exec_leader
     ,  l1_from_top_leader
