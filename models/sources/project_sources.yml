@@ -30,7 +30,7 @@ sources:
 
       - name: source_terminations
         identifier: SOURCE_TERMINATIONS
-        description: Termination events.
+        description: Termination events from Smirkday
         loaded_at_field: period_date
         columns:
           - name: employee_id

@@ -11,7 +11,6 @@ with headcount_base as (
     where 1=1
     and metric = 'Headcount'
     group by 1,2
-
 )
 
 , headcount_all as (
@@ -27,7 +26,6 @@ with headcount_base as (
 
     from headcount_base
     group by 1
-    
 )
 
 , headcount_rolling as (
@@ -41,8 +39,7 @@ with headcount_base as (
             order by period_start
             rows between 11 preceding and current row)
             as avg_headcount_12m
-        
-    
+         
     from headcount_all
 )
 
