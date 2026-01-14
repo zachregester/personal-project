@@ -1,6 +1,6 @@
 {{ config(materialized='table')}}
 
-with monthly_hc as (
+with headcount_base as (
 
     select period_date as period_start
         ,  region
@@ -10,30 +10,44 @@ with monthly_hc as (
 
     where 1=1
     and metric = 'Headcount'
-
     group by 1,2
-
 )
 
-, monthly_hc_all as (
+, headcount_all as (
 
-    select * from monthly_hc
+    select * 
+    from headcount_base
 
     union all
 
-    select period_start, 'All' as region, sum(ending_headcount) as ending_headcount
+    select period_start
+         , 'All' as region
+         , sum(ending_headcount) as ending_headcount
 
-    from monthly_hc
-
+    from headcount_base
     group by 1
-    
 )
 
-, monthly_terms as (
+, headcount_rolling as (
+
+    select period_start
+        ,  region
+        ,  ending_headcount
+
+        ,  avg(ending_headcount) over (
+            partition by region
+            order by period_start
+            rows between 11 preceding and current row)
+            as avg_headcount_12m
+         
+    from headcount_all
+)
+
+, terminations_base as (
 
     select period_date as period_start
         ,  region
-        ,  termination_type
+        ,  termination_reason
         ,  count(distinct employee_id) as terminations
 
     from {{ ref('int_employee_monthly') }}
@@ -42,49 +56,92 @@ with monthly_hc as (
     and metric = 'Terminations'
 
     group by 1,2,3
-
 )
 
-,  monthly_terms_all as (
+, terminations_all as (
 
-    select * from monthly_terms
+    select *
+    from terminations_base
 
     union all
 
-    select period_start, region, 'All' as termination_type, sum(terminations) as terminations
+    select period_start
+         , region
+         , 'All' as termination_reason
+         , sum(terminations) as terminations
     
-    from monthly_terms
-    
+    from terminations_base
     group by 1,2
 
     union all
 
-    select period_start, 'All' as region, 'All' as termination_type, sum(terminations) as terminations
-    
-    from monthly_terms
-    
-    group by 1
+    select period_start
+         , 'All' as region
+         , termination_reason
+         , sum(terminations) as terminations
+    from terminations_base
+    group by 1,3
 
+    union all
+
+    select period_start
+         , 'All' as region
+         , 'All' as termination_reason
+         , sum(terminations) as terminations
+    
+    from terminations_base
+    group by 1
+)
+
+, combined as (
+
+    select t.period_start
+        ,  t.region
+        ,  t.termination_reason
+        ,  t.terminations
+        ,  hc.ending_headcount
+
+    from terminations_all t
+
+    left join headcount_all hc
+    on t.period_start = hc.period_start
+    and t.region = hc.region
 )
 
 , final as (
 
-    select t.period_start
-        ,  t.region
-        ,  t.termination_type
-        ,  t.terminations as overall_terminations
-        ,  hc.ending_headcount as overall_ending_headcount
+    select c.period_start
+        ,  c.region
+        ,  c.termination_reason
+        ,  c.terminations
+        ,  c.ending_headcount
 
-    from monthly_terms_all t
+        -- rolling terminations calc
+        ,  sum(c.terminations) over (
+            partition by c.region, c.termination_reason 
+            order by c.period_start
+            rows between 11 preceding and current row) as terminations_12m 
 
-    left join monthly_hc_all hc
-    on t.period_start = hc.period_start
-    and t.region = hc.region
+        -- rolling avg headcount calc
+        ,  roll.avg_headcount_12m
 
-    order by 1 desc, 2,3
+        -- rolling turnover calculation
+        , (sum(c.terminations) over (
+            partition by c.region, c.termination_reason
+            order by c.period_start
+            rows between 11 preceding and current row))
+            
+            /
 
+            nullif(roll.avg_headcount_12m,0) as turnover_rate_12m
+        
+    from combined c
+
+    left join headcount_rolling roll
+    on c.period_start = roll.period_start
+    and c.region = roll.region
 )
 
 select *
 from final
-order by period_start desc, region, termination_type
+order by period_start desc, region, termination_reason

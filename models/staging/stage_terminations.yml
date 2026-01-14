@@ -1,0 +1,10 @@
+version: 2
+
+models:
+  - name: stage_terminations
+    tests:
+      - dbt_utils.unique_combination_of_columns:
+          combination_of_columns:
+            - employee_id
+            - period_date_clean
+            - termination_date

@@ -67,7 +67,8 @@ with hc as (
         ,  t.l2_from_top_leader
         ,  t.l3_from_top_leader
 
-        ,  (case when hc.region is null then 'EAST'
+        ,  (case when t.exec_leader = 'Alex Kim' then 'WEST'
+                 when hc.region is null then 'EAST'
                  else hc.region end) as region
 
         ,  hc.state
@@ -122,4 +123,3 @@ with hc as (
 
 select distinct *
 from final
-
