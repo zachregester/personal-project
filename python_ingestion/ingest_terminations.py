@@ -1,6 +1,7 @@
 import os
 import json
 import pandas as pd
+from datetime import datetime, timezone
 
 from snowflake.connector import connect
 from snowflake.connector.pandas_tools import write_pandas
@@ -47,6 +48,8 @@ for r in termination_data.get("data", []):
 
 df = pd.DataFrame(rows)
 
+df["INGESTED_AT"] = datetime.now(timezone.utc)
+
 print("DF shape:", df.shape)
 print(df.head(5))
 
@@ -70,6 +73,7 @@ try:
         overwrite=True,
         quote_identifiers=False,
         auto_create_table=False,
+        use_logical_type=True,
     )
     print("Loaded:", success, "rows:", nrows, "chunks:", nchunks)
 
