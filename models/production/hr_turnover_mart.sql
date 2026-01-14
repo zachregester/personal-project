@@ -59,7 +59,6 @@ with headcount_base as (
     and metric = 'Terminations'
 
     group by 1,2,3
-
 )
 
 , terminations_all as (
@@ -95,7 +94,6 @@ with headcount_base as (
     
     from terminations_base
     group by 1
-
 )
 
 , combined as (
@@ -111,7 +109,6 @@ with headcount_base as (
     left join headcount_all hc
     on t.period_start = hc.period_start
     and t.region = hc.region
-
 )
 
 , final as (
