@@ -122,4 +122,3 @@ with hc as (
 
 select distinct *
 from final
-
