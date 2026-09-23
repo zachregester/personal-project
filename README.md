@@ -1,6 +1,6 @@
-**Zach's People Analytics Repo — Miniature dbt Project (View-Only)**
+**Zach's Analytics Engineering POC (View-Only)**
 --------
-Purpose: Demonstrate how I structure dbt projects using **fully synthetic data**.
+Purpose: Demonstrate how I'd structure an end-to-end project using **fully synthetic data**.
 
 Goal: Highlight process, design, and best practices - not to replicate real business complexity.
 
@@ -15,7 +15,7 @@ Note: All data is fake and illustrative. Nothing comes from any employer or prop
 
 **Macros**: generate_schema_name.sql for schema config overrides
 
-**Python examples:** separate API notebooks (`x_python_example/`) to show pulling from REST APIs and shaping data with pandas (separate from dbt project)
+**Python examples:** separate API notebooks (`x_python_example/`) to show pulling from REST APIs and shaping data with pandas (supplemental exercises)
 
 **Repo Tour**
 ---------
